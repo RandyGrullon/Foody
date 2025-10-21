@@ -1,0 +1,58 @@
+{
+  "placeholderImages": [
+    {
+      "id": "meatballs",
+      "description": "Plate of Swedish meatballs with mashed potatoes, lingonberry jam, and cream sauce.",
+      "imageUrl": "https://images.unsplash.com/photo-1678646142944-8dd890c43c62?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Zm9vZCUyMG1lYXRiYWxsc3xlbnwwfHx8fDE3NjA5NzA1OTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "food meatballs"
+    },
+    {
+      "id": "salmon",
+      "description": "Salmon fillet with vegetable medallions and a lemon-dill sauce.",
+      "imageUrl": "https://images.unsplash.com/photo-1677889173178-ea3176d5c5f0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxmb29kJTIwc2FsbW9ufGVufDB8fHx8MTc2MDk3MDU5M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "food salmon"
+    },
+    {
+      "id": "plant-balls",
+      "description": "Plant-based balls with mashed potatoes, peas, and lingonberry jam.",
+      "imageUrl": "https://images.unsplash.com/photo-1641601905519-70554cb7b8c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxmb29kJTIwdmVnYW58ZW58MHx8fHwxNzYwOTcwNTk0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "food vegan"
+    },
+    {
+      "id": "cinnamon-bun",
+      "description": "A warm and soft cinnamon bun with pearl sugar.",
+      "imageUrl": "https://images.unsplash.com/photo-1552633350-31feaef157af?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxmb29kJTIwcGFzdHJ5fGVufDB8fHx8MTc2MDk3MDU5M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "food pastry"
+    },
+    {
+      "id": "hot-dog",
+      "description": "A classic IKEA hot dog in a soft bun.",
+      "imageUrl": "https://images.unsplash.com/photo-1596283478383-e8ac68044a28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxmb29kJTIwaG90ZG9nfGVufDB8fHx8MTc2MDk3MDU5M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "food hotdog"
+    },
+    {
+      "id": "dime-cake",
+      "description": "Almond cake with crunchy caramel and milk chocolate.",
+      "imageUrl": "https://images.unsplash.com/photo-1574043436847-6e18093727c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxmb29kJTIwY2FrZXxlbnwwfHx8fDE3NjA5NzA1OTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "food cake"
+    },
+    {
+      "id": "breakfast-plate",
+      "description": "Scrambled eggs, sausage, and a hash brown.",
+      "imageUrl": "https://images.unsplash.com/photo-1683260041390-e13c859f4b7b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxmb29kJTIwYnJlYWtmYXN0fGVufDB8fHx8MTc2MDk3MDU5NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "food breakfast"
+    },
+    {
+      "id": "pancakes",
+      "description": "Swedish pancakes with berries and cream.",
+      "imageUrl": "https://images.unsplash.com/photo-1729711549678-68a7d028791d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxmb29kJTIwcGFuY2FrZXN8ZW58MHx8fHwxNzYwOTcwNTkzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "food pancakes"
+    },
+    {
+      "id": "veggie-wrap",
+      "description": "A wrap filled with fresh vegetables and a light dressing.",
+      "imageUrl": "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxmb29kJTIwd3JhcHxlbnwwfHx8fDE3NjA5NzA1OTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "food wrap"
+    }
+  ]
+}
