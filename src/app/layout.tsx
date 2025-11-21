@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { CartProvider } from "@/hooks/use-cart";
-import { Header } from "@/components/header";
-import { MobileSidebar } from "@/components/mobile-sidebar";
+import { CartSidebarProvider } from "@/hooks/use-cart-sidebar";
+import { SearchProvider } from "@/hooks/use-search";
+import { AuthProvider } from "@/hooks/use-auth";
+import { LayoutWrapper } from "@/components/layout-wrapper";
 
 export const metadata: Metadata = {
   title: "IKEA Eats",
@@ -25,20 +27,21 @@ export default function RootLayout({
           crossOrigin=""
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased h-full">
-        <CartProvider>
-          <div className="relative flex min-h-screen flex-col">
-            <Header />
-            <MobileSidebar>
-              <main className="flex-1">{children}</main>
-            </MobileSidebar>
-          </div>
-          <Toaster />
-        </CartProvider>
+      <body className="font-body antialiased h-full overflow-x-hidden">
+        <AuthProvider>
+          <CartProvider>
+            <CartSidebarProvider>
+              <SearchProvider>
+                <LayoutWrapper>{children}</LayoutWrapper>
+                <Toaster />
+              </SearchProvider>
+            </CartSidebarProvider>
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

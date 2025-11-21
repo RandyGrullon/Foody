@@ -1,0 +1,62 @@
+@startuml IKEA_Eats_Use_Cases_Simple
+
+' Versión simplificada del diagrama de casos de uso
+
+skinparam actorStyle awesome
+skinparam shadowing false
+
+' Colores IKEA
+skinparam actor {
+  BackgroundColor #0058AB
+  BorderColor #003D82
+  FontColor #FFFFFF
+}
+
+skinparam usecase {
+  BackgroundColor #FFFFFF
+  BorderColor #0058AB
+  BorderThickness 2
+}
+
+' Actor principal
+actor Usuario as User
+
+' Sistema
+rectangle "IKEA Eats" {
+  
+  ' Casos de uso principales
+  usecase "Explorar Menú" as Browse
+  usecase "Buscar Platillos" as Search
+  usecase "Ver Detalles" as Details
+  usecase "Personalizar Platillo" as Customize
+  usecase "Agregar al Carrito" as AddCart
+  usecase "Gestionar Carrito" as ManageCart
+  usecase "Realizar Checkout" as Checkout
+  usecase "Pagar Orden" as Pay
+  usecase "Ver Historial" as History
+  usecase "Gestionar Perfil" as Profile
+  
+  ' Relaciones
+  User --> Browse
+  User --> Search
+  User --> Details
+  User --> Customize
+  User --> AddCart
+  User --> ManageCart
+  User --> Checkout
+  User --> History
+  User --> Profile
+  
+  Browse ..> Details : <<include>>
+  Search ..> Details : <<include>>
+  Details ..> Customize : <<extend>>
+  Customize ..> AddCart : <<include>>
+  ManageCart ..> Checkout : <<include>>
+  Checkout ..> Pay : <<include>>
+}
+
+' Sistema externo
+actor "Sistema de Pago" as PaymentSystem
+Pay --> PaymentSystem
+
+@enduml

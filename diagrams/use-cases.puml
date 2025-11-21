@@ -1,0 +1,196 @@
+@startuml IKEA_Eats_Use_Cases
+
+!define RECTANGLE class
+
+' Estilos
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam backgroundColor #FFFFFF
+
+' Colores IKEA
+skinparam actor {
+  BackgroundColor #0058AB
+  BorderColor #003D82
+  FontColor #FFFFFF
+}
+
+skinparam usecase {
+  BackgroundColor #FFFFFF
+  BorderColor #0058AB
+  FontColor #000000
+  BorderThickness 2
+}
+
+skinparam package {
+  BackgroundColor #F5F5F5
+  BorderColor #0058AB
+  FontColor #0058AB
+  FontStyle bold
+}
+
+' Actores
+actor "Usuario\nNuevo" as NewUser
+actor "Usuario\nRegistrado" as RegisteredUser
+actor "Usuario\nFrecuente" as FrequentUser
+
+' Sistema externo
+actor "Sistema de\nPagos" as PaymentSystem
+
+' Herencia de actores
+NewUser <|-- RegisteredUser
+RegisteredUser <|-- FrequentUser
+
+' Paquete principal del sistema
+package "IKEA Eats - Sistema de Pedidos" {
+  
+  ' ========== NAVEGACIÓN Y EXPLORACIÓN ==========
+  package "Navegación y Exploración" #LightBlue {
+    usecase "Explorar Menú" as UC1
+    usecase "Buscar Platillos" as UC2
+    usecase "Filtrar por Categoría" as UC3
+    usecase "Ver Detalles de Platillo" as UC4
+    usecase "Ver Información Nutricional" as UC5
+  }
+  
+  ' ========== PERSONALIZACIÓN ==========
+  package "Personalización de Pedido" #LightGreen {
+    usecase "Crear Platillo Personalizado" as UC6
+    usecase "Seleccionar Ingredientes" as UC7
+    usecase "Agregar Extras a Platillo" as UC8
+    usecase "Ajustar Cantidad" as UC9
+  }
+  
+  ' ========== GESTIÓN DE CARRITO ==========
+  package "Gestión de Carrito" #LightYellow {
+    usecase "Agregar al Carrito" as UC10
+    usecase "Ver Carrito" as UC11
+    usecase "Modificar Cantidad en Carrito" as UC12
+    usecase "Eliminar Item del Carrito" as UC13
+    usecase "Vaciar Carrito" as UC14
+  }
+  
+  ' ========== CHECKOUT Y PAGO ==========
+  package "Checkout y Pago" #LightCoral {
+    usecase "Proceder a Checkout" as UC15
+    usecase "Seleccionar Tipo de Orden" as UC16
+    usecase "Pagar con Apple Pay" as UC17
+    usecase "Pagar con Google Pay" as UC18
+    usecase "Pagar con Tarjeta" as UC19
+    usecase "Confirmar Orden" as UC20
+  }
+  
+  ' ========== GESTIÓN DE PERFIL ==========
+  package "Gestión de Perfil" #Lavender {
+    usecase "Ver Perfil" as UC21
+    usecase "Editar Información Personal" as UC22
+    usecase "Ver Historial de Órdenes" as UC23
+    usecase "Ver Órdenes Activas" as UC24
+    usecase "Ver Detalles de Orden" as UC25
+    usecase "Descargar Código QR" as UC26
+  }
+  
+  ' ========== BÚSQUEDA AVANZADA ==========
+  package "Búsqueda y Filtros" #PeachPuff {
+    usecase "Búsqueda en Tiempo Real" as UC27
+    usecase "Ver Resultados de Búsqueda" as UC28
+    usecase "Aplicar Filtros" as UC29
+  }
+}
+
+' ========== RELACIONES: NAVEGACIÓN Y EXPLORACIÓN ==========
+NewUser --> UC1
+NewUser --> UC2
+NewUser --> UC3
+NewUser --> UC4
+
+UC1 ..> UC3 : <<include>>
+UC2 ..> UC27 : <<include>>
+UC4 ..> UC5 : <<include>>
+UC27 ..> UC28 : <<include>>
+
+' ========== RELACIONES: PERSONALIZACIÓN ==========
+NewUser --> UC6
+NewUser --> UC8
+NewUser --> UC9
+
+UC6 ..> UC7 : <<include>>
+UC4 ..> UC8 : <<extend>>
+UC8 ..> UC9 : <<include>>
+
+' ========== RELACIONES: CARRITO ==========
+NewUser --> UC10
+NewUser --> UC11
+NewUser --> UC12
+NewUser --> UC13
+
+UC10 ..> UC11 : <<include>>
+UC11 ..> UC12 : <<extend>>
+UC11 ..> UC13 : <<extend>>
+UC11 ..> UC14 : <<extend>>
+
+' ========== RELACIONES: CHECKOUT ==========
+RegisteredUser --> UC15
+RegisteredUser --> UC16
+
+UC15 ..> UC16 : <<include>>
+UC16 ..> UC17 : <<extend>>
+UC16 ..> UC18 : <<extend>>
+UC16 ..> UC19 : <<extend>>
+UC15 ..> UC20 : <<include>>
+
+' Relación con sistema externo
+UC17 --> PaymentSystem
+UC18 --> PaymentSystem
+UC19 --> PaymentSystem
+
+' ========== RELACIONES: PERFIL ==========
+RegisteredUser --> UC21
+RegisteredUser --> UC22
+RegisteredUser --> UC23
+RegisteredUser --> UC24
+
+UC21 ..> UC22 : <<extend>>
+UC21 ..> UC23 : <<include>>
+UC21 ..> UC24 : <<include>>
+UC23 ..> UC25 : <<extend>>
+UC24 ..> UC25 : <<extend>>
+UC25 ..> UC26 : <<extend>>
+
+' ========== RELACIONES: BÚSQUEDA ==========
+UC2 ..> UC29 : <<extend>>
+
+' ========== RELACIONES FRECUENTES ==========
+FrequentUser --> UC23
+FrequentUser --> UC6
+
+' Notas explicativas
+note right of UC1
+  El usuario puede explorar
+  el menú completo sin
+  necesidad de registro
+end note
+
+note right of UC15
+  Requiere tener items
+  en el carrito
+end note
+
+note right of UC16
+  Carry Out: Pago inmediato
+  Pre-order: Pago en tienda
+end note
+
+note bottom of PaymentSystem
+  Integración con
+  pasarelas de pago
+  (Simulado en v1.0)
+end note
+
+note right of UC6
+  Permite crear platillos
+  completamente personalizados
+  seleccionando ingredientes
+end note
+
+@enduml

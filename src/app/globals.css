@@ -4,58 +4,58 @@
 
 @layer base {
   :root {
-    --background: 210 30% 98%; /* very light blue */
-    --foreground: 215 16% 14%;
+    --background: 0 0% 100%;
+    --foreground: 210 11% 15%; /* Dark Grey for text */
     --card: 0 0% 100%;
-    --card-foreground: 215 16% 14%;
+    --card-foreground: 210 11% 15%;
     --popover: 0 0% 100%;
-    --popover-foreground: 215 16% 14%;
-    --primary: 210 100% 45%; /* primary blue */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 210 20% 96%;
-    --secondary-foreground: 215 16% 14%;
+    --popover-foreground: 210 11% 15%;
+    --primary: 209 100% 33.5%; /* IKEA Blue #0058AB */
+    --primary-foreground: 48 96% 53%; /* IKEA Yellow #FBD914 for text on blue */
+    --secondary: 48 96% 53%; /* IKEA Yellow #FBD914 */
+    --secondary-foreground: 209 100% 33.5%; /* Blue text on yellow */
     --muted: 210 20% 96%;
-    --muted-foreground: 215 12% 46%;
-    --accent: 215 90% 55%; /* accent blue */
-    --accent-foreground: 0 0% 100%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 48 96% 53%;
+    --accent-foreground: 209 100% 33.5%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 210 20% 92%;
-    --input: 210 20% 92%;
-    --ring: 210 100% 50%;
-    --radius: 0.5rem;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 209 100% 33.5%;
+    --radius: 0rem; /* IKEA design is often boxy/sharp, but we'll keep a tiny radius or 0 for strict adherence. Let's go with small radius 0.25rem or 0 */
+    --chart-1: 209 100% 33.5%;
+    --chart-2: 48 96% 53%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
   }
 
   .dark {
-    --background: 210 25% 8%;
-    --foreground: 210 20% 96%;
-    --card: 210 25% 10%;
-    --card-foreground: 210 20% 96%;
-    --popover: 210 25% 10%;
-    --popover-foreground: 210 20% 96%;
-    --primary: 210 100% 50%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 210 18% 12%;
-    --secondary-foreground: 210 20% 96%;
-    --muted: 210 18% 12%;
-    --muted-foreground: 210 12% 70%;
-    --accent: 205 90% 55%;
-    --accent-foreground: 0 0% 100%;
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 209 100% 33.5%; /* Keep Blue prominent even in dark mode */
+    --primary-foreground: 48 96% 53%;
+    --secondary: 48 96% 53%;
+    --secondary-foreground: 209 100% 33.5%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 48 96% 53%;
+    --accent-foreground: 209 100% 33.5%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 210 18% 12%;
-    --input: 210 18% 12%;
-    --ring: 210 100% 45%;
-    --chart-1: 210 70% 45%;
-    --chart-2: 190 60% 40%;
-    --chart-3: 180 50% 35%;
-    --chart-4: 220 60% 45%;
-    --chart-5: 240 60% 45%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 48 96% 53%;
+    --chart-1: 209 100% 33.5%;
+    --chart-2: 48 96% 53%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 }
 
@@ -69,23 +69,11 @@
 }
 
 @layer utilities {
-  .cart-jiggle {
-    animation: jiggle 0.5s ease-in-out;
+  .glass {
+    @apply bg-white/70 dark:bg-black/70 backdrop-blur-lg border border-white/20 dark:border-white/10;
   }
-
-  @keyframes jiggle {
-    0%,
-    100% {
-      transform: translateX(0);
-    }
-    25% {
-      transform: translateX(-2px);
-    }
-    50% {
-      transform: translateX(2px);
-    }
-    75% {
-      transform: translateX(-2px);
-    }
+  
+  .text-balance {
+    text-wrap: balance;
   }
 }

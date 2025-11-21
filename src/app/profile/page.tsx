@@ -437,18 +437,10 @@ export default function ProfilePage() {
         </div>
 
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="overview" className="gap-2">
               <User className="h-4 w-4" />
               Overview
-            </TabsTrigger>
-            <TabsTrigger value="orders" className="gap-2">
-              <Clock className="h-4 w-4" />
-              Orders
-            </TabsTrigger>
-            <TabsTrigger value="cards" className="gap-2">
-              <CreditCard className="h-4 w-4" />
-              Payment
             </TabsTrigger>
             <TabsTrigger value="settings" className="gap-2">
               <Settings className="h-4 w-4" />
@@ -461,104 +453,254 @@ export default function ProfilePage() {
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Quick Stats */}
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium flex items-center gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Total Orders Card */}
+              <Card className="border-none shadow-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white overflow-hidden relative group">
+                <div className="absolute right-0 top-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-500" />
+                <CardHeader className="pb-2 relative z-10">
+                  <CardTitle className="text-sm font-medium flex items-center gap-2 text-blue-100">
                     <ShoppingCart className="h-4 w-4" />
                     Total Orders
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{history.length}</div>
-                  <p className="text-xs text-muted-foreground">
+                <CardContent className="relative z-10">
+                  <div className="text-4xl font-bold mb-1">{history.length}</div>
+                  <p className="text-sm text-blue-100 font-medium">
                     {inProgressOrders.length} in progress
                   </p>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium flex items-center gap-2">
+              {/* Saved Cards Card */}
+              <Card className="border-none shadow-lg bg-gradient-to-br from-purple-500 to-purple-600 text-white overflow-hidden relative group">
+                <div className="absolute right-0 top-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-500" />
+                <CardHeader className="pb-2 relative z-10">
+                  <CardTitle className="text-sm font-medium flex items-center gap-2 text-purple-100">
                     <CreditCard className="h-4 w-4" />
                     Saved Cards
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{cards.length}</div>
-                  <p className="text-xs text-muted-foreground">
+                <CardContent className="relative z-10">
+                  <div className="text-4xl font-bold mb-1">{cards.length}</div>
+                  <p className="text-sm text-purple-100 font-medium">
                     Securely encrypted
                   </p>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium flex items-center gap-2">
+              {/* Cart Items Card */}
+              <Card className="border-none shadow-lg bg-gradient-to-br from-orange-500 to-orange-600 text-white overflow-hidden relative group">
+                <div className="absolute right-0 top-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-500" />
+                <CardHeader className="pb-2 relative z-10">
+                  <CardTitle className="text-sm font-medium flex items-center gap-2 text-orange-100">
                     <History className="h-4 w-4" />
                     Cart Items
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{cartItems.length}</div>
-                  <p className="text-xs text-muted-foreground">
+                <CardContent className="relative z-10">
+                  <div className="text-4xl font-bold mb-1">{cartItems.length}</div>
+                  <p className="text-sm text-orange-100 font-medium">
                     Ready to checkout
                   </p>
                 </CardContent>
               </Card>
             </div>
 
+            {/* Quick Actions */}
+            <Card className="border-none shadow-lg">
+              <CardHeader className="bg-gradient-to-r from-muted/50 to-transparent">
+                <CardTitle className="flex items-center gap-2">
+                  <Package className="h-5 w-5 text-primary" />
+                  Quick Actions
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <Link href="/orders">
+                    <Button variant="outline" className="w-full h-auto flex-col gap-2 py-4 hover:bg-primary/5 hover:border-primary transition-all">
+                      <Clock className="h-6 w-6 text-primary" />
+                      <span className="text-sm font-medium">My Orders</span>
+                    </Button>
+                  </Link>
+                  <Link href="/">
+                    <Button variant="outline" className="w-full h-auto flex-col gap-2 py-4 hover:bg-primary/5 hover:border-primary transition-all">
+                      <ShoppingCart className="h-6 w-6 text-primary" />
+                      <span className="text-sm font-medium">Browse Menu</span>
+                    </Button>
+                  </Link>
+                  <Link href="/create-dish">
+                    <Button variant="outline" className="w-full h-auto flex-col gap-2 py-4 hover:bg-primary/5 hover:border-primary transition-all">
+                      <Plus className="h-6 w-6 text-primary" />
+                      <span className="text-sm font-medium">Create Dish</span>
+                    </Button>
+                  </Link>
+                  {cartItems.length > 0 && (
+                    <Link href="/checkout">
+                      <Button variant="outline" className="w-full h-auto flex-col gap-2 py-4 hover:bg-primary/5 hover:border-primary transition-all">
+                        <CreditCard className="h-6 w-6 text-primary" />
+                        <span className="text-sm font-medium">Checkout</span>
+                      </Button>
+                    </Link>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Current Cart Preview */}
             {cartItems.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <ShoppingCart className="h-5 w-5" />
-                    Current Cart
-                  </CardTitle>
+              <Card className="border-none shadow-lg">
+                <CardHeader className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-b">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-2">
+                      <ShoppingCart className="h-5 w-5 text-primary" />
+                      Current Cart
+                    </CardTitle>
+                    <Badge variant="secondary" className="font-semibold">
+                      {cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}
+                    </Badge>
+                  </div>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
+                <CardContent className="pt-6">
+                  <div className="space-y-4">
                     {cartItems.slice(0, 3).map((item: CartItem) => (
                       <div
                         key={item.id}
-                        className="flex justify-between items-center"
+                        className="flex justify-between items-center p-3 rounded-lg hover:bg-muted/50 transition-colors"
                       >
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 bg-muted rounded-md flex items-center justify-center">
-                            <ShoppingCart className="h-6 w-6" />
+                          <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg flex items-center justify-center">
+                            <ShoppingCart className="h-6 w-6 text-primary" />
                           </div>
                           <div>
-                            <div className="font-medium">{item.name}</div>
+                            <div className="font-semibold">{item.name}</div>
                             <div className="text-sm text-muted-foreground">
                               Qty: {item.quantity}
                             </div>
                           </div>
                         </div>
-                        <div className="text-sm font-semibold">
+                        <div className="text-lg font-bold text-primary">
                           ${(item.price * item.quantity).toFixed(2)}
                         </div>
                       </div>
                     ))}
                     {cartItems.length > 3 && (
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-muted-foreground text-center py-2">
                         +{cartItems.length - 3} more items
                       </p>
                     )}
                   </div>
                   <Separator className="my-4" />
-                  <div className="flex gap-2">
-                    <Button variant="outline" onClick={() => clearCart()}>
+                  <div className="flex gap-3">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => clearCart()}
+                      className="gap-2"
+                    >
+                      <Trash2 className="h-4 w-4" />
                       Clear Cart
                     </Button>
-                    <Link href="/checkout">
-                      <Button className="flex-1">Proceed to Checkout</Button>
+                    <Link href="/checkout" className="flex-1">
+                      <Button className="w-full gap-2 shadow-md hover:shadow-lg transition-all">
+                        <CreditCard className="h-4 w-4" />
+                        Proceed to Checkout
+                      </Button>
                     </Link>
                   </div>
                 </CardContent>
               </Card>
             )}
+          </TabsContent>
+
+          <TabsContent value="settings" className="space-y-6">
+            <Card className="border-none shadow-lg">
+              <CardHeader className="bg-gradient-to-r from-muted/50 to-transparent border-b">
+                <CardTitle className="flex items-center gap-2">
+                  <Settings className="h-5 w-5 text-primary" />
+                  Account Settings
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-6 space-y-6">
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">Full Name</label>
+                    <Input 
+                      value={userProfile.name} 
+                      onChange={(e) => saveUserProfile({ ...userProfile, name: e.target.value })}
+                      className="mt-1"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">Email</label>
+                    <Input 
+                      value={userProfile.email} 
+                      onChange={(e) => saveUserProfile({ ...userProfile, email: e.target.value })}
+                      className="mt-1"
+                      type="email"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">Phone</label>
+                    <Input 
+                      value={userProfile.phone} 
+                      onChange={(e) => saveUserProfile({ ...userProfile, phone: e.target.value })}
+                      className="mt-1"
+                      type="tel"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">Address</label>
+                    <Input 
+                      value={userProfile.address} 
+                      onChange={(e) => saveUserProfile({ ...userProfile, address: e.target.value })}
+                      className="mt-1"
+                    />
+                  </div>
+                </div>
+                <Separator />
+                <div className="flex justify-end">
+                  <Button className="gap-2">
+                    <Settings className="h-4 w-4" />
+                    Save Changes
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="security" className="space-y-6">
+            <Card className="border-none shadow-lg">
+              <CardHeader className="bg-gradient-to-r from-muted/50 to-transparent border-b">
+                <CardTitle className="flex items-center gap-2">
+                  <Shield className="h-5 w-5 text-primary" />
+                  Security Settings
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-6 space-y-6">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-4 rounded-lg border">
+                    <div>
+                      <h4 className="font-semibold">Two-Factor Authentication</h4>
+                      <p className="text-sm text-muted-foreground">Add an extra layer of security</p>
+                    </div>
+                    <Button variant="outline" size="sm">Enable</Button>
+                  </div>
+                  <div className="flex items-center justify-between p-4 rounded-lg border">
+                    <div>
+                      <h4 className="font-semibold">Change Password</h4>
+                      <p className="text-sm text-muted-foreground">Update your password regularly</p>
+                    </div>
+                    <Button variant="outline" size="sm">Change</Button>
+                  </div>
+                  <div className="flex items-center justify-between p-4 rounded-lg border">
+                    <div>
+                      <h4 className="font-semibold">Login History</h4>
+                      <p className="text-sm text-muted-foreground">View recent login activity</p>
+                    </div>
+                    <Button variant="outline" size="sm">View</Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="orders" className="space-y-6">

@@ -52,6 +52,7 @@ export default function ConfirmationPage() {
               displayValue: true,
               width: 2,
               height: 40,
+              background: "transparent",
             });
           }
         } catch (e) {
@@ -90,92 +91,99 @@ export default function ConfirmationPage() {
   }
 
   return (
-    <div className="container py-12 max-w-2xl mx-auto">
-      <Card className="shadow-2xl">
-        <CardHeader className="text-center">
-          <div className="mx-auto bg-green-100 dark:bg-green-900 rounded-full p-3 w-fit">
-            <CheckCircle2 className="h-12 w-12 text-green-600 dark:text-green-400" />
-          </div>
-          <CardTitle className="text-3xl font-headline mt-4">
-            Order Confirmed!
-          </CardTitle>
-          <CardDescription className="text-lg">
-            Thank you for your order.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="bg-muted/50 rounded-lg p-4 text-center">
-            <p className="text-sm text-muted-foreground">
-              Your Confirmation Code
-            </p>
-            <p className="text-3xl font-bold tracking-widest font-mono">
-              {confirmationCode}
-            </p>
-          </div>
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+      <div className="w-full max-w-2xl relative">
+        {/* Background decoration */}
+        <div className="absolute -top-20 -left-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-secondary/10 rounded-full blur-3xl" />
 
-          <div className="text-center">
-            <p className="text-muted-foreground">
-              Please show this at the register.
-            </p>
-            <div className="flex justify-center items-center gap-8 mt-4">
-              <div className="text-center">
-                {qrDataUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={qrDataUrl}
-                    alt="QR Code"
-                    className="mx-auto w-40 h-40 object-contain bg-white p-2"
-                  />
-                ) : (
-                  <QrCodeIcon className="mx-auto" />
-                )}
-                <p className="text-xs mt-1 text-muted-foreground">QR Code</p>
-              </div>
-              <div className="text-center">
-                <svg ref={barcodeRef} className="mx-auto" />
-                <p className="text-xs mt-1 text-muted-foreground">Barcode</p>
-              </div>
+        <Card className="border-none shadow-2xl bg-card/80 backdrop-blur-md overflow-hidden relative z-10">
+          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary to-secondary" />
+          
+          <CardHeader className="text-center pb-8 pt-10">
+            <div className="mx-auto bg-green-100/50 backdrop-blur-sm rounded-full p-4 w-fit mb-4 animate-in zoom-in duration-500">
+              <CheckCircle2 className="h-12 w-12 text-green-600" />
             </div>
-          </div>
+            <CardTitle className="text-3xl font-headline font-bold">
+              Order Confirmed!
+            </CardTitle>
+            <CardDescription className="text-lg">
+              Thank you for your order.
+            </CardDescription>
+          </CardHeader>
 
-          <Separator />
+          <CardContent className="space-y-8 px-8 pb-10">
+            <div className="bg-muted/30 rounded-xl p-6 text-center border border-border/50">
+              <p className="text-sm text-muted-foreground mb-2">
+                Your Confirmation Code
+              </p>
+              <p className="text-4xl font-bold tracking-widest font-mono text-primary">
+                {confirmationCode}
+              </p>
+            </div>
 
-          <div>
-            <h3 className="font-semibold mb-2">Order Summary</h3>
-            <div className="space-y-2">
-              {order.items.map((item) => (
-                <div key={item.id} className="flex justify-between text-sm">
-                  <span>
-                    {item.name} x {item.quantity}
-                  </span>
-                  <span>${(item.price * item.quantity).toFixed(2)}</span>
+            <div className="text-center space-y-4">
+              <p className="text-muted-foreground">
+                Please show this at the register.
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-8">
+                <div className="text-center bg-white p-4 rounded-xl shadow-sm">
+                  {qrDataUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={qrDataUrl}
+                      alt="QR Code"
+                      className="mx-auto w-32 h-32 object-contain"
+                    />
+                  ) : (
+                    <QrCodeIcon className="mx-auto w-32 h-32 text-muted" />
+                  )}
+                  <p className="text-xs mt-2 text-muted-foreground font-medium">QR Code</p>
                 </div>
-              ))}
-              <Separator />
-              <div className="flex justify-between font-bold">
-                <span>Total</span>
-                <span>${order.total.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between text-sm text-muted-foreground">
-                <span>Order Type</span>
-                <span>
-                  {order.type === "carry-out"
-                    ? "Carry Out (Paid)"
-                    : "In-Store Pre-order"}
-                </span>
+                <div className="text-center bg-white p-4 rounded-xl shadow-sm flex flex-col justify-center h-[160px]">
+                  <svg ref={barcodeRef} className="mx-auto max-w-[180px]" />
+                  <p className="text-xs mt-2 text-muted-foreground font-medium">Barcode</p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <Button
-            asChild
-            size="lg"
-            className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
-          >
-            <Link href="/">Back to Menu</Link>
-          </Button>
-        </CardContent>
-      </Card>
+            <div className="space-y-4">
+              <h3 className="font-bold text-lg border-b pb-2">Order Summary</h3>
+              <div className="space-y-3">
+                {order.items.map((item) => (
+                  <div key={item.id} className="flex justify-between text-sm">
+                    <span className="font-medium">
+                      {item.name} <span className="text-muted-foreground">x {item.quantity}</span>
+                    </span>
+                    <span className="font-mono">${(item.price * item.quantity).toFixed(2)}</span>
+                  </div>
+                ))}
+                <Separator />
+                <div className="flex justify-between font-bold text-lg">
+                  <span>Total</span>
+                  <span className="text-primary">${order.total.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-sm text-muted-foreground bg-muted/20 p-2 rounded-lg">
+                  <span>Order Type</span>
+                  <span className="font-medium text-foreground">
+                    {order.type === "carry-out"
+                      ? "Carry Out (Paid)"
+                      : "In-Store Pre-order"}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <Button
+              asChild
+              size="lg"
+              className="w-full font-bold shadow-lg hover:shadow-xl transition-all"
+            >
+              <Link href="/">Back to Menu</Link>
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
