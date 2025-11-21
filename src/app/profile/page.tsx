@@ -66,26 +66,8 @@ export default function ProfilePage() {
   const router = useRouter();
   const { cartItems, clearCart, addToCart } = useCart();
   const { savedDishes, removeDish } = useSavedDishes();
-
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push("/auth/login");
-    }
-  }, [user, loading, router]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted/20">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return null;
-  }
-
   const { toast } = useToast();
+  
   const [history, setHistory] = useState<Array<any>>([]);
   const [userProfile, setUserProfile] = useState<UserProfile>({
     name: "John Doe",
@@ -101,6 +83,12 @@ export default function ProfilePage() {
     consumed: 120.50,
     available: 379.50,
   });
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/auth/login");
+    }
+  }, [user, loading, router]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -128,6 +116,18 @@ export default function ProfilePage() {
     localStorage.removeItem("ikea-eats-history");
     setHistory([]);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted/20">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
 
   const getOrderStatusInfo = (status: string) => {
     switch (status) {
