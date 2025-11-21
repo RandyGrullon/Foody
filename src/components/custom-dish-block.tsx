@@ -24,7 +24,8 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 import { Button as RawButton } from "@/components/ui/button";
-import { X, Minus, Plus, Search } from "lucide-react";
+import { X, Minus, Plus, Search, Heart } from "lucide-react";
+import { useSavedDishes } from "@/hooks/use-saved-dishes";
 
 // Get image URL from placeholder images
 const getImageUrl = (imageKey: string): string | null => {
@@ -80,6 +81,7 @@ export function CustomDishBlock() {
   };
 
   const { addToCart } = useCart();
+  const { saveDish, isSaved } = useSavedDishes();
 
   const total = useMemo(() => {
     return selectedItems.reduce((sum, selectedItem) => {
@@ -131,7 +133,36 @@ export function CustomDishBlock() {
     }
 
     // Navigate to checkout to complete payment
+    // Navigate to checkout to complete payment
     router.push("/checkout");
+  };
+
+  const handleSaveDish = () => {
+    if (selectedItems.length === 0) return;
+
+    const items = selectedItems
+      .map((selectedItem) => {
+        const item = menuItems.find((i) => i.id === selectedItem.id);
+        return item ? { id: item.id, name: item.name, quantity: selectedItem.quantity } : null;
+      })
+      .filter(Boolean) as { id: string; name: string; quantity: number }[];
+
+    const price = selectedItems.reduce((sum, selectedItem) => {
+      const item = menuItems.find((i) => i.id === selectedItem.id);
+      return sum + (item ? item.price * selectedItem.quantity : 0);
+    }, 0);
+
+    // Generate a name based on main ingredients or generic name
+    const mainIngredient = items[0]?.name || "Custom Dish";
+    const dishName = `Custom ${mainIngredient} Bowl`;
+
+    saveDish({
+      name: dishName,
+      description: `Custom dish with ${items.length} ingredients including ${items.map(i => i.name).join(", ")}`,
+      price: price,
+      image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=800", // Generic healthy bowl image
+      ingredients: items,
+    });
   };
 
   const [toRemoveId, setToRemoveId] = useState<string | null>(null);
@@ -403,6 +434,15 @@ export function CustomDishBlock() {
                   onClick={handlePrepareDish}
                 >
                   Add Custom Dish to Order
+                </Button>
+                
+                <Button
+                  variant="outline"
+                  className="w-full mt-3 gap-2"
+                  onClick={handleSaveDish}
+                >
+                  <Heart className="w-4 h-4" />
+                  Save to Favorites
                 </Button>
               </div>
             )}

@@ -8,9 +8,9 @@
 - ✅ Checkout básico
 - ✅ Perfil de usuario
 - ✅ Historial de órdenes
+- ✅ Autenticación de usuarios
 
 ### Fase 2 (Futuro Cercano)
-- 🔲 Autenticación de usuarios
 - 🔲 Programa de lealtad
 - 🔲 Cupones y descuentos
 

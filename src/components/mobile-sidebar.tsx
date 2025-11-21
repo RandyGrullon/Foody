@@ -19,10 +19,11 @@ import { useAuth } from "@/hooks/use-auth";
 
 interface MobileSidebarProps {
   children: React.ReactNode;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 }
 
-export function MobileSidebar({ children }: MobileSidebarProps) {
-  const [open, setOpen] = useState(false);
+export function MobileSidebar({ children, open, setOpen }: MobileSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { user, signOut } = useAuth();
@@ -68,15 +69,6 @@ export function MobileSidebar({ children }: MobileSidebarProps) {
     <div className="flex flex-1 w-full">
       {/* Mobile Sidebar */}
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="md:hidden fixed top-4 left-4 z-50 bg-white shadow-md border"
-          >
-            <Menu className="h-5 w-5" />
-          </Button>
-        </SheetTrigger>
         <SheetContent side="left" className="w-80 p-0">
           <div className="flex flex-col h-full">
             {/* Header */}

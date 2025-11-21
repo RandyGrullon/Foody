@@ -12,7 +12,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { CreditCard, Package, UtensilsCrossed, Minus, Plus, Trash2 } from "lucide-react";
+import { CreditCard, Package, UtensilsCrossed, Minus, Plus, Trash2, Landmark, Wallet, Loader2 } from "lucide-react";
 import type { CartItem } from "@/types";
 import { ProtectedRoute } from "@/components/protected-route";
 
@@ -22,6 +22,7 @@ export default function CheckoutPage() {
   const [pendingOrder, setPendingOrder] = useState<any | null>(null);
   const [checkoutOption, setCheckoutOption] = useState("carry-out");
   const [isClient, setIsClient] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -49,8 +50,13 @@ export default function CheckoutPage() {
     return image ? image.imageHint : "food";
   };
 
-  const handleConfirmOrder = (e: React.FormEvent) => {
+  const handleConfirmOrder = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    setIsProcessing(true);
+
+    // Simulate processing delay
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
     // If there's a pending custom order, use it instead of the cart
     const sourceItems = pendingOrder ? pendingOrder.items : cartItems;
@@ -141,6 +147,30 @@ export default function CheckoutPage() {
         </div>
       
         <div className="container py-8 -mt-12 relative z-10">
+          {/* Processing Loader Overlay */}
+          {isProcessing && (
+            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center">
+              <div className="bg-card rounded-2xl p-8 shadow-2xl max-w-md mx-4 text-center space-y-6">
+                <div className="relative">
+                  <div className="w-20 h-20 mx-auto">
+                    <Loader2 className="w-20 h-20 text-primary animate-spin" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-2xl font-bold text-foreground">Processing Payment</h3>
+                  <p className="text-muted-foreground">
+                    Please wait while we process your order...
+                  </p>
+                </div>
+                <div className="flex gap-2 justify-center">
+                  <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{ animationDelay: '0ms' }} />
+                  <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{ animationDelay: '150ms' }} />
+                  <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{ animationDelay: '300ms' }} />
+                </div>
+              </div>
+            </div>
+          )}
+
           {!hasItems ? (
             <Card className="border-none shadow-lg bg-card/80 backdrop-blur-sm max-w-2xl mx-auto">
               <CardContent className="p-12 text-center space-y-6">
@@ -361,27 +391,38 @@ export default function CheckoutPage() {
                         </h3>
                         
                         {/* Payment Method Selection */}
-                        <div className="grid grid-cols-1 gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {/* Payroll Deduction */}
+                          <button
+                            type="button"
+                            className="flex items-center justify-start gap-4 p-4 h-24 rounded-2xl border border-border/50 bg-card hover:border-primary/50 hover:bg-primary/5 hover:shadow-md transition-all group relative overflow-hidden"
+                          >
+                            <div className="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-sm shrink-0 group-hover:scale-110 transition-transform duration-300">
+                              <Wallet className="w-6 h-6" />
+                            </div>
+                            <span className="font-semibold text-base">Descuento Nómina</span>
+                          </button>
+
                           {/* Apple Pay */}
                           <button
                             type="button"
-                            className="flex items-center justify-center gap-3 p-4 rounded-xl border-2 border-border hover:border-primary hover:bg-primary/5 transition-all group"
+                            className="flex items-center justify-start gap-4 p-4 h-24 rounded-2xl border border-border/50 bg-card hover:border-primary/50 hover:bg-primary/5 hover:shadow-md transition-all group relative overflow-hidden"
                           >
-                            <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                              <svg className="w-8 h-8" viewBox="0 0 24 24" fill="white">
+                            <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+                              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="white">
                                 <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
                               </svg>
                             </div>
-                            <span className="font-semibold text-lg">Apple Pay</span>
+                            <span className="font-semibold text-base">Apple Pay</span>
                           </button>
 
                           {/* Google Pay */}
                           <button
                             type="button"
-                            className="flex items-center justify-center gap-3 p-4 rounded-xl border-2 border-border hover:border-primary hover:bg-primary/5 transition-all group"
+                            className="flex items-center justify-start gap-4 p-4 h-24 rounded-2xl border border-border/50 bg-card hover:border-primary/50 hover:bg-primary/5 hover:shadow-md transition-all group relative overflow-hidden"
                           >
-                            <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center border">
-                              <svg className="w-10 h-10" viewBox="0 0 48 20" fill="none">
+                            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center border shrink-0 group-hover:scale-110 transition-transform duration-300">
+                              <svg className="w-8 h-8" viewBox="0 0 48 20" fill="none">
                                 <path d="M23.7 9.7h-3.2v7.6h1.7v-2.6h1.5c1.4 0 2.5-1.1 2.5-2.5s-1.1-2.5-2.5-2.5zm0 3.5h-1.5v-2h1.5c.6 0 1 .4 1 1s-.4 1-1 1z" fill="#5F6368"/>
                                 <path d="M29.9 12.2c0-1.7-1.2-2.9-2.8-2.9s-2.9 1.2-2.9 2.9c0 1.6 1.2 2.9 2.9 2.9.9 0 1.6-.3 2.1-.8l-1-.7c-.3.3-.7.5-1.2.5-.7 0-1.2-.3-1.4-.9l3.2-1.3-.1-.7zm-3.3.4c0-.7.5-1.1 1-.1.1 1 .1-.1 0 0-.1-.1-.2-.2-.4-.2-.3 0-.6.2-.6.5z" fill="#5F6368"/>
                                 <path d="M33.8 9.3c-.6 0-1.1.3-1.4.7l-.1-.6h-1.5v7.9h1.7v-2.7c.3.4.8.6 1.4.6 1.4 0 2.5-1.2 2.5-2.9s-1.1-3-2.6-3zm-.3 4.4c-.8 0-1.4-.7-1.4-1.5s.6-1.5 1.4-1.5 1.4.7 1.4 1.5-.6 1.5-1.4 1.5z" fill="#5F6368"/>
@@ -392,47 +433,19 @@ export default function CheckoutPage() {
                                 <path d="M6.6 8.2c.6 0 1.2.2 1.7.7l1.2-1.2C8.8 7 7.8 6.6 6.6 6.6c-1.8 0-3.3 1.1-4 2.5l1.5 1.2c.4-1 1.3-1.8 2.5-1.8z" fill="#EA4335"/>
                               </svg>
                             </div>
-                            <span className="font-semibold text-lg">Google Pay</span>
+                            <span className="font-semibold text-base">Google Pay</span>
                           </button>
 
-                          {/* Credit/Debit Card */}
-                          <div className="border-2 border-border rounded-xl p-4 space-y-4">
-                            <div className="flex items-center gap-3 pb-2 border-b">
-                              <CreditCard className="h-5 w-5 text-primary" />
-                              <span className="font-semibold">Credit or Debit Card</span>
+                          {/* Banco */}
+                          <button
+                            type="button"
+                            className="flex items-center justify-start gap-4 p-4 h-24 rounded-2xl border border-border/50 bg-card hover:border-primary/50 hover:bg-primary/5 hover:shadow-md transition-all group relative overflow-hidden"
+                          >
+                            <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-sm shrink-0 group-hover:scale-110 transition-transform duration-300">
+                              <Landmark className="w-6 h-6" />
                             </div>
-                            
-                            <div className="space-y-4">
-                              <div className="space-y-2">
-                                <Label htmlFor="card-name">Name on Card</Label>
-                                <Input
-                                  id="card-name"
-                                  placeholder="John Doe"
-                                  required
-                                  className="bg-background/50"
-                                />
-                              </div>
-                              <div className="space-y-2">
-                                <Label htmlFor="card-number">Card Number</Label>
-                                <Input
-                                  id="card-number"
-                                  placeholder="0000 0000 0000 0000"
-                                  required
-                                  className="bg-background/50"
-                                />
-                              </div>
-                              <div className="grid grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                  <Label htmlFor="expiry">Expiry</Label>
-                                  <Input id="expiry" placeholder="MM/YY" required className="bg-background/50" />
-                                </div>
-                                <div className="space-y-2">
-                                  <Label htmlFor="cvc">CVC</Label>
-                                  <Input id="cvc" placeholder="123" required className="bg-background/50" />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                            <span className="font-semibold text-base">Banco</span>
+                          </button>
                         </div>
                       </div>
                     )}

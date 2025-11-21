@@ -7,6 +7,8 @@ import { SearchProvider } from "@/hooks/use-search";
 import { AuthProvider } from "@/hooks/use-auth";
 import { LayoutWrapper } from "@/components/layout-wrapper";
 
+import { SavedDishesProvider } from "@/hooks/use-saved-dishes";
+
 export const metadata: Metadata = {
   title: "IKEA Eats",
   description: "Order your favorite IKEA food online.",
@@ -36,8 +38,10 @@ export default function RootLayout({
           <CartProvider>
             <CartSidebarProvider>
               <SearchProvider>
-                <LayoutWrapper>{children}</LayoutWrapper>
-                <Toaster />
+                <SavedDishesProvider>
+                  <LayoutWrapper>{children}</LayoutWrapper>
+                  <Toaster />
+                </SavedDishesProvider>
               </SearchProvider>
             </CartSidebarProvider>
           </CartProvider>

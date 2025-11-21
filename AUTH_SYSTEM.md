@@ -1,19 +1,19 @@
-# Sistema de Autenticación - Foody
+# Sistema de Autenticación - IKEA-Eats
 
-## 📋 Descripción General
+## Descripción General
 
 La aplicación Foody utiliza un **sistema de autenticación basado en endpoints personalizados** en lugar de Firebase. 
 
-### 🌐 Acceso Público con Autenticación en Checkout
+### Acceso Público con Autenticación en Checkout
 
 La aplicación sigue un modelo de **e-commerce moderno**:
-- ✅ **Navegación libre** - Los usuarios pueden explorar la app sin necesidad de login
-- ✅ **Agregar al carrito** - Pueden agregar productos al carrito sin autenticarse
-- 🔐 **Login requerido en checkout** - Solo se requiere autenticación al momento de pagar
+- **Navegación libre** - Los usuarios pueden explorar la app sin necesidad de login
+- **Agregar al carrito** - Pueden agregar productos al carrito sin autenticarse
+- **Login requerido en checkout** - Solo se requiere autenticación al momento de pagar
 
 Este flujo mejora la experiencia del usuario y reduce la fricción en el proceso de compra.
 
-## 🔐 Credenciales de Prueba
+## Credenciales de Prueba
 
 Para completar el checkout, utiliza las siguientes credenciales:
 
@@ -22,7 +22,7 @@ Email:    test@foody.com
 Password: test123
 ```
 
-## ✨ Características del Sistema
+## Características del Sistema
 
 ### 1. **Autenticación Selectiva**
 - La mayoría de la app es de acceso público (home, menú, búsqueda, etc.)
@@ -52,7 +52,7 @@ Password: test123
 - Redirección automática a login solo cuando se intenta acceder a rutas protegidas
 - Guarda la ruta de destino para redirección post-login
 
-## 🏗️ Arquitectura
+## Arquitectura
 
 ### Archivos Principales
 
@@ -83,7 +83,7 @@ Componente de protección selectiva de rutas:
 #### 4. **`src/components/layout-wrapper.tsx`**
 Wrapper principal que integra la protección de rutas en toda la app
 
-## 🚀 Flujo de Autenticación
+## Flujo de Autenticación
 
 ### Navegación Pública
 1. Usuario abre la app → Puede navegar libremente
@@ -113,7 +113,7 @@ Wrapper principal que integra la protección de rutas en toda la app
 3. Estado del usuario se establece en `null`
 4. Usuario es redirigido a `/auth/login`
 
-## 🔧 Personalización
+## Personalización
 
 ### Proteger Más Rutas
 
@@ -163,7 +163,7 @@ En `src/lib/auth-service.ts`, modifica la función `generateToken`:
 exp: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 días
 ```
 
-## 🔄 Migración a Backend Real
+## Migración a Backend Real
 
 Cuando estés listo para conectar con un backend real:
 
@@ -186,14 +186,14 @@ export async function signInWithEmail(email: string, password: string) {
 3. **Implementa refresh tokens** para mayor seguridad
 4. **Agrega interceptores HTTP** para incluir el token en todas las peticiones
 
-## 📝 Notas Importantes
+## Notas Importantes
 
-- ⚠️ **Este sistema es solo para desarrollo/demo**. No uses esto en producción sin implementar un backend real.
-- 🔒 Los tokens generados son simulados y no están firmados criptográficamente
-- 💾 Los datos se almacenan en localStorage (no es seguro para datos sensibles en producción)
-- 🚫 No hay validación de email ni requisitos de contraseña complejos
+- **Este sistema es solo para desarrollo/demo**. No uses esto en producción sin implementar un backend real.
+- Los tokens generados son simulados y no están firmados criptográficamente
+- Los datos se almacenan en localStorage (no es seguro para datos sensibles en producción)
+- No hay validación de email ni requisitos de contraseña complejos
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### La sesión no persiste
 - Verifica que localStorage esté habilitado en tu navegador
@@ -207,7 +207,7 @@ export async function signInWithEmail(email: string, password: string) {
 - Verifica que estés usando las credenciales correctas: `test@foody.com` / `test123`
 - Revisa la consola del navegador para mensajes de error
 
-## 📚 Recursos Adicionales
+## Recursos Adicionales
 
 - [Next.js Authentication](https://nextjs.org/docs/authentication)
 - [React Context API](https://react.dev/reference/react/useContext)

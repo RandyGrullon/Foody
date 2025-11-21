@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Search, User, ChefHat, ClipboardList, X, LogOut, Settings } from "lucide-react";
+import { Search, User, ChefHat, ClipboardList, X, LogOut, Settings, Menu } from "lucide-react";
 import { useSearch } from "@/hooks/use-search";
 import { useAuth } from "@/hooks/use-auth";
 import { menuItems } from "@/lib/data";
@@ -17,7 +17,7 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-export function Header() {
+export function Header({ onMobileMenuToggle }: { onMobileMenuToggle?: () => void }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
@@ -62,12 +62,23 @@ export function Header() {
       <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-sm supports-[backdrop-filter]:bg-background/95">
         <div className="container flex h-16 items-center justify-between pl-4 md:pl-0 max-w-7xl mx-auto">
           <div className="flex items-center gap-8">
+            {/* Mobile Menu Button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              onClick={onMobileMenuToggle}
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+            
             <Link
               href="/"
               className="flex items-center gap-2 hover:opacity-80 transition-opacity"
             >
               <IkeaEatsLogo />
             </Link>
+            
             <nav className="hidden md:flex items-center gap-6">
               <Link href="/" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
                 Home
